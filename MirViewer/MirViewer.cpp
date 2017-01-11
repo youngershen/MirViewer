@@ -3,13 +3,7 @@
 
 #include "stdafx.h"
 #include "MirViewer.h"
-
-#define MAX_LOADSTRING 100
-
-// 全局变量: 
-HINSTANCE hInst;                                // 当前实例
-WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
-WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
+#include "global.h"
 
 // 此代码模块中包含的函数的前向声明: 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -30,6 +24,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 初始化全局字符串
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_MIRVIEWER, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDS_AUTHOR, szAuthorName, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDS_AUTHOR_EMAIL, szAuthorEmail, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 执行应用程序初始化: 
