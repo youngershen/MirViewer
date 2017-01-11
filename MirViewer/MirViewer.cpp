@@ -133,6 +133,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+
+            case IDM_FILEOPEN:
+                ZeroMemory(&openFileName, sizeof(openFileName));
+                openFileName.lStructSize = sizeof(openFileName);
+                openFileName.hwndOwner = hWnd;
+                openFileName.lpstrFile = szOpenFileName;
+                openFileName.lpstrFile[0] = '\0';
+                openFileName.nMaxFile = sizeof(openFileName);
+                openFileName.lpstrFilter = L"All\0*.*\0Text\0*.TXT\0";
+                openFileName.nFilterIndex = 1;
+                openFileName.lpstrFileTitle = NULL;
+                openFileName.nMaxFileTitle = 0;
+                openFileName.lpstrInitialDir = NULL;
+                openFileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+                if (GetOpenFileName(&openFileName) == TRUE)
+                    fileHandle = CreateFile(openFileName.lpstrFile,
+                        GENERIC_READ,
+                        0,
+                        (LPSECURITY_ATTRIBUTES)NULL,
+                        OPEN_EXISTING,
+                        FILE_ATTRIBUTE_NORMAL,
+                        (HANDLE)NULL);
+                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
