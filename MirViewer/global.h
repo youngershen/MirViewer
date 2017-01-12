@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #define MAX_LOADSTRING 255
+#define MAX_OPENFILENAME_LENGTH 1024
 
 // 全局变量: 
 HINSTANCE hInst;                                // 当前实例

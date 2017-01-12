@@ -3,21 +3,29 @@
 
 class OpenFileDialog
 {   
-    public:
-        OpenFileDialog();
-        OpenFileDialog(HANDLE parentWnd);
 
-        ~OpenFileDialog();
+public:
+    HANDLE getFileHandle();
+    HWND getHwndOwner();
+    OPENFILENAME getOpenFileName();
+    WCHAR getFileName();
 
-        HANDLE getFileHandle();
-        HANDLE getParentWnd();
-        OPENFILENAME getOpenFileDialog();
-        WCHAR getFileName();
+    static OpenFileDialog& instance();
 
-    private:
-        HANDLE fileHandle;
-        HANDLE parentWnd;
-        OPENFILENAME openFileDialog;
-        WCHAR szFileName;
+private:
+    OpenFileDialog();
+    OpenFileDialog(OpenFileDialog const &);
+    OpenFileDialog(HWND hwndOwner, LPCTSTR lpstrFilter, LPTSTR lpstrCustomFilter, DWORD nFilterIndex);
+    OpenFileDialog operator = (OpenFileDialog const&);
+    ~OpenFileDialog();
+    
+private:
+    HANDLE fileHandle;
+    HWND hwndOwner;
+    OPENFILENAME openFileName;
+    WCHAR szFileName;
+    LPCTSTR lpstrFilter;
+    LPTSTR lpstrCustomFilter;
+    DWORD nFilterIndex;
 };
 
