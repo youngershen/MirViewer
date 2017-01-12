@@ -136,6 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case IDM_FILEOPEN:
                 ZeroMemory(&openFileName, sizeof(openFileName));
+                
                 openFileName.lStructSize = sizeof(openFileName);
                 openFileName.hwndOwner = hWnd;
                 openFileName.lpstrFile = szOpenFileName;
