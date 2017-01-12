@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MirViewer.h"
 #include "global.h"
+#include "OpenFileDialog.h"
 
 // 此代码模块中包含的函数的前向声明: 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -119,6 +120,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    OpenFileDialog & dialog = OpenFileDialog::instance(
+        hWnd, L"test",
+        OFN_ENABLESIZING | OFN_FILEMUSTEXIST);
     switch (message)
     {
     case WM_COMMAND:
@@ -135,27 +139,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
 
             case IDM_FILEOPEN:
-                ZeroMemory(&openFileName, sizeof(openFileName));
-                
-                openFileName.lStructSize = sizeof(openFileName);
-                openFileName.hwndOwner = hWnd;
-                openFileName.lpstrFile = szOpenFileName;
-                openFileName.lpstrFile[0] = '\0';
-                openFileName.nMaxFile = sizeof(openFileName);
-                openFileName.lpstrFilter = L"All\0*.*\0Text\0*.TXT\0";
-                openFileName.nFilterIndex = 1;
-                openFileName.lpstrFileTitle = NULL;
-                openFileName.nMaxFileTitle = 0;
-                openFileName.lpstrInitialDir = NULL;
-                openFileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-                if (GetOpenFileName(&openFileName) == TRUE)
-                    fileHandle = CreateFile(openFileName.lpstrFile,
-                        GENERIC_READ,
-                        0,
-                        (LPSECURITY_ATTRIBUTES)NULL,
-                        OPEN_EXISTING,
-                        FILE_ATTRIBUTE_NORMAL,
-                        (HANDLE)NULL);
+                dialog.open();
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
